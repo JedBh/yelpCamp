@@ -25,9 +25,22 @@ async function main() {
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
+
+const sessionConfig = {
+  secret: "thisshouldbeabettersecret",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  },
+};
+app.use(session(sessionConfig));
 
 // app routes
 app.use("/campgrounds", campgrounds);
@@ -48,8 +61,8 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error", { err, statusCode });
 });
 
-const PORT = 8080;
+const PORT = 3000;
 // app listen
 app.listen(PORT, () => {
-  console.log("Serving on port ", PORT);
+  console.log("Serving on port", PORT);
 });
