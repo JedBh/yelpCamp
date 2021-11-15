@@ -30,6 +30,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+app.use(express.static(path.join(__dirname, "public")));
 
 // app routes
 app.use("/campgrounds", campgrounds);
@@ -50,7 +51,8 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error", { err, statusCode });
 });
 
+const PORT = 8080;
 // app listen
-app.listen(3000, () => {
-  console.log("Serving on port 3000");
+app.listen(PORT, () => {
+  console.log("Serving on port ", PORT);
 });
