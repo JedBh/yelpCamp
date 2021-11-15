@@ -3,14 +3,11 @@ const app = express();
 const path = require("path");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
-const Joi = require("joi");
-const { campgroundSchema, reviewSchema } = require("./schemas");
-const catchAsync = require("./utils/catchAsync");
+const session = require("express-session");
+
 const ExpressError = require("./utils/ExpressError");
-const Review = require("./models/review");
 const methodOverride = require("method-override");
-const { validate } = require("./models/campground");
-const Campground = require("./models/campground");
+
 const campgrounds = require("./routes/campgrounds");
 const reviews = require("./routes/reviews");
 
