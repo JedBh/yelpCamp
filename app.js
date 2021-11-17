@@ -12,8 +12,9 @@ const LocalStrategy = require("passport-local");
 const ExpressError = require("./utils/ExpressError");
 const User = require("./models/user");
 
-const campgrounds = require("./routes/campgrounds");
-const reviews = require("./routes/reviews");
+const campgroundsRoutes = require("./routes/campgrounds");
+const reviewsRoutes = require("./routes/reviews");
+const usersRoutes = require("./routes/users");
 
 // connecting to mongodb
 main()
@@ -67,8 +68,9 @@ app.get("/fakeuser", async (req, res) => {
   res.send(newUser);
 });
 
-app.use("/campgrounds", campgrounds);
-app.use("/campgrounds/:id/reviews", reviews);
+app.use("/", usersRoutes);
+app.use("/campgrounds", campgroundsRoutes);
+app.use("/campgrounds/:id/reviews", reviewsRoutes);
 
 app.get("/", (req, res) => {
   res.redirect("/campgrounds");
