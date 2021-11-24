@@ -24,9 +24,10 @@ router.get(
   })
 );
 
-router.get("/new", (req, res) => {
-  res.render("campgrounds/new");
-});
+// router.get("/new", (req, res) => {
+//   if(!req.isAuthenticated(),)
+//   res.render("campgrounds/new");
+// });
 
 router.post(
   "/",
