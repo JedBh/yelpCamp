@@ -8,6 +8,10 @@ const campgroundSchema = new Schema({
   price: Number,
   description: String,
   location: String,
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
   reviews: [
     {
       type: Schema.Types.ObjectId,
@@ -15,6 +19,8 @@ const campgroundSchema = new Schema({
     },
   ],
 });
+
+// 61a35c87477ee874fbc7937c - John's ID
 
 campgroundSchema.post("findOneAndDelete", async function (doc) {
   if (doc) {
