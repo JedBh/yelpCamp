@@ -24,15 +24,17 @@ const campgroundsRoutes = require("./routes/campgrounds");
 const reviewsRoutes = require("./routes/reviews");
 const usersRoutes = require("./routes/users");
 
+const dbUrl = process.env.DB_URL;
+
 // connecting to mongodb
 main()
   .then(() => {
     console.log("Mongo Connected");
   })
   .catch((err) => console.log("Mongo Connection Error", err));
-
+// mongodb://localhost:27017/yelp-camp
 async function main() {
-  await mongoose.connect("mongodb://localhost:27017/yelp-camp");
+  await mongoose.connect(dbUrl);
 }
 
 app.engine("ejs", ejsMate);
