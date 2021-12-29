@@ -25,17 +25,17 @@ const campgroundsRoutes = require("./routes/campgrounds");
 const reviewsRoutes = require("./routes/reviews");
 const usersRoutes = require("./routes/users");
 
-const dbUrl = process.env.DB_URL;
-
+const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
+const secret = process.env.SECRET || "eyesandears";
 // connecting to mongodb
 main()
   .then(() => {
     console.log("Mongo Connected");
   })
   .catch((err) => console.log("Mongo Connection Error", err));
-// mongodb://localhost:27017/yelp-camp
+
 async function main() {
-  await mongoose.connect("mongodb://localhost:27017/yelp-camp");
+  await mongoose.connect(dbUrl);
 }
 
 app.engine("ejs", ejsMate);
@@ -52,10 +52,10 @@ app.use(
 );
 
 const store = MongoStore.create({
-  mongoUrl: "mongodb://localhost:27017/yelp-camp",
+  mongoUrl: dbUrl,
   touchAfter: 24 * 60 * 60,
   crypto: {
-    secret: "thisshouldbeabettersecret",
+    secret: secret,
   },
 });
 
@@ -66,7 +66,7 @@ store.on("error", function (e) {
 const sessionConfig = {
   store,
   name: "session",
-  secret: "thisshouldbeabettersecret",
+  secret: secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
